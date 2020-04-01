@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import axiosDb from '@/axios-database';
+import postsMixin from '@/mixins/posts-mixin';
 
 export default {
   props: {
@@ -21,7 +21,6 @@ export default {
   },
   data: function() {
     return {
-      posts: []
     }
   },
   name: 'Home',
@@ -29,18 +28,9 @@ export default {
     this.$emit('onAuth', localStorage.getItem('token') !== null);
   },
   created() {
-    axiosDb.get(`posts.json`).then((res) => {
-      const allPostsRes = res.data;
-      for (const postId in allPostsRes) {
-        this.posts.push({
-          postId,
-          ...allPostsRes[postId]
-        });
-      }
-    }).catch((err) => {
-      console.error(err);
-    });
-  }
+    this.getAllPosts();
+  },
+  mixins: [postsMixin]
 }
 </script>
 

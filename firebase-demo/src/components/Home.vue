@@ -29,11 +29,7 @@ export default {
     this.$emit('onAuth', localStorage.getItem('token') !== null);
   },
   created() {
-    axiosDb.get(`posts.json`, {
-      name: 'Post 1',
-      createdOn: new Date(),
-      content: 'asfsdsdsdfsdfsd'
-    }).then((res) => {
+    axiosDb.get(`posts.json`).then((res) => {
       const allPostsRes = res.data;
       for (const postId in allPostsRes) {
         this.posts.push({
